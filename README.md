@@ -5,15 +5,17 @@ tweak sofware to control them. This aims to solve that using a Lightweight syste
 without needing GPU Tweak II installed.
 
 > I am not responsible for any damage you cause to your gpu
+
 ![img.png](assets/images/img.png)
-> 
+
+
 ## How it works
 
 The external fan headers are controlled by an onboard ASUS microcontroller (I2C address `0x52`, port `1`)
 that sits on the GPU PCB. This app writes fan speed directly to it via the NVIDIA driver's NvAPI I2C
 interface (`NvAPI_I2CWriteEx`), bypassing GPU Tweak entirely.
 
-Reverse engineered via x32dbg + Ghidra from `Vender.dll` and `ASUSGPUFanServiceEx.exe`.
+Reverse engineered via x32dbg + Ghidra from `ASUSGPUFanServiceEx.exe`.
 
 ## Requirements
 
@@ -64,8 +66,14 @@ dotnet publish src/AsusFanControl.csproj -c Release -r win-x86 --self-contained 
 
 Or just push to GitHub -- Actions builds it automatically.
 
+## AI Disclosure
+
+Ai was used to generate the code side of the UI application since I'm not that familiar with C# which was needed to keep
+the background resource usage low. Code was still checked by me and pushed by me.   
+
 ## Roadmap
 
-- [ ] GPU temperature-based fan curve (graph editor)
-- [ ] Per-fan control if hardware supports it
-- [ ] Dark/light theme popup
+- GPU temperature-based fan curve (graph editor)
+- Dark/light theme popup
+- Windows service
+- 0 db mode
