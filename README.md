@@ -1,7 +1,10 @@
 # ASUS Fan Control
 
-Lightweight system tray app to control the external fan headers on ASUS GTX 1080 Strix cards,
+Asus had a cool idea of adding external fan headers to their older strix cards but require you to use their buggy gpu
+tweak sofware to control them. This aims to solve that using a Lightweight system tray app,
 without needing GPU Tweak II installed.
+
+> I am not responsible for any damage you cause to your gpu
 
 ## How it works
 
@@ -29,11 +32,11 @@ Reverse engineered via x32dbg + Ghidra from `Vender.dll` and `ASUSGPUFanServiceE
 
 ### Keyboard shortcuts (in the popup)
 
-| Key      | Action           |
-|----------|------------------|
-| Enter    | Apply speed      |
-| Escape   | Close popup      |
-| Ctrl+D   | Toggle diagnostic register scan |
+| Key    | Action                          |
+|--------|---------------------------------|
+| Enter  | Apply speed                     |
+| Escape | Close popup                     |
+| Ctrl+D | Toggle diagnostic register scan |
 
 ### Diagnostic mode
 
@@ -45,6 +48,7 @@ which helps identify the correct fan register if 0x11 is wrong for your card var
 
 To run on boot: create a shortcut to `AsusFanControl.exe`, right-click it > Properties >
 Advanced > check "Run as administrator", then place the shortcut in:
+
 ```
 %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
 ```
