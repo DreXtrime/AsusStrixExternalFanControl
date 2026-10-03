@@ -5,7 +5,8 @@ tweak sofware to control them. This aims to solve that using a Lightweight syste
 without needing GPU Tweak II installed.
 
 > I am not responsible for any damage you cause to your gpu
-
+![img.png](assets/images/img.png)
+> 
 ## How it works
 
 The external fan headers are controlled by an onboard ASUS microcontroller (I2C address `0x52`, port `1`)
