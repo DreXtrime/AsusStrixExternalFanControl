@@ -20,9 +20,14 @@ try
 }
 catch (Exception ex)
 {
+    // Write full details to a log file next to the exe for debugging
+    string logPath = Path.Combine(AppContext.BaseDirectory, "AsusFanControl_error.log");
+    string details = $"[{DateTime.Now}]\r\n{ex}\r\n\r\n";
+    File.AppendAllText(logPath, details);
+
     MessageBox.Show(
-        $"Failed to initialize NVIDIA API:\n{ex.Message}\n\n" +
-        "Make sure you have an NVIDIA GPU and are running as Administrator.",
+        $"Failed to initialize NVIDIA API:\n\n{ex}\n\n" +
+        $"Full log written to:\n{logPath}",
         "ASUS Fan Control - Startup Error",
         MessageBoxButtons.OK,
         MessageBoxIcon.Error);
