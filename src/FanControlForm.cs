@@ -29,7 +29,7 @@ internal class FanControlForm : Form
         MaximizeBox     = false;
         MinimizeBox     = false;
         StartPosition   = FormStartPosition.Manual;
-        Size            = new Size(300, 190);
+        Size            = new Size(300, 230);
         BackColor       = Color.FromArgb(30, 30, 30);
         ForeColor       = Color.White;
         TopMost         = true;
@@ -50,28 +50,47 @@ internal class FanControlForm : Form
         // Percentage label
         _percentLabel = new Label
         {
-            Text      = $"{currentPercent}%",
+            Text      = currentPercent == 0 ? "Off" : $"{currentPercent}%",
             ForeColor = Color.White,
             Font      = new Font("Segoe UI", 24f, FontStyle.Bold),
-            Location  = new Point(12, 32),
-            Size      = new Size(80, 45),
+            Location  = new Point(12, 30),
+            Size      = new Size(120, 45),
             TextAlign = ContentAlignment.MiddleLeft
         };
 
-        // Slider
+        // Slider -- range 50-100 only; use Off button for 0
+        int sliderVal = currentPercent < 50 ? 50 : currentPercent;
         _slider = new TrackBar
         {
-            Minimum     = 0,
-            Maximum     = 100,
-            Value       = currentPercent,
+            Minimum      = 50,
+            Maximum      = 100,
+            Value        = sliderVal,
             TickFrequency= 10,
-            SmallChange = 1,
-            LargeChange = 10,
-            Location    = new Point(8, 80),
-            Size        = new Size(272, 32),
-            BackColor   = Color.FromArgb(30, 30, 30)
+            SmallChange  = 1,
+            LargeChange  = 10,
+            Location     = new Point(8, 82),
+            Size         = new Size(272, 45),
+            BackColor    = Color.FromArgb(30, 30, 30)
         };
         _slider.ValueChanged += Slider_ValueChanged;
+
+        // Off button (sets fans to 0)
+        var offButton = new Button
+        {
+            Text      = "Off (0%)",
+            Location  = new Point(12, 138),
+            Size      = new Size(80, 28),
+            BackColor = Color.FromArgb(60, 60, 60),
+            ForeColor = Color.FromArgb(200, 200, 200),
+            FlatStyle = FlatStyle.Flat,
+            Font      = new Font("Segoe UI", 9f)
+        };
+        offButton.FlatAppearance.BorderSize = 0;
+        offButton.Click += (_, _) =>
+        {
+            _percentLabel.Text = "Off";
+            _onSpeedChanged(0);
+        };
 
         // Instant apply checkbox
         _instantCheck = new CheckBox
@@ -79,7 +98,7 @@ internal class FanControlForm : Form
             Text      = "Apply instantly",
             Checked   = false,
             ForeColor = Color.FromArgb(180, 180, 180),
-            Location  = new Point(12, 118),
+            Location  = new Point(12, 176),
             AutoSize  = true,
             BackColor = Color.Transparent
         };
@@ -88,7 +107,7 @@ internal class FanControlForm : Form
         _applyButton = new Button
         {
             Text      = "Apply",
-            Location  = new Point(170, 113),
+            Location  = new Point(170, 171),
             Size      = new Size(110, 28),
             BackColor = Color.FromArgb(0, 120, 215),
             ForeColor = Color.White,
@@ -102,7 +121,7 @@ internal class FanControlForm : Form
         _diagButton = new Button
         {
             Text      = "Scan Registers",
-            Location  = new Point(12, 148),
+            Location  = new Point(12, 205),
             Size      = new Size(268, 24),
             BackColor = Color.FromArgb(60, 60, 60),
             ForeColor = Color.FromArgb(180, 180, 180),
@@ -113,7 +132,7 @@ internal class FanControlForm : Form
         _diagButton.FlatAppearance.BorderSize = 0;
         _diagButton.Click += DiagButton_Click;
 
-        Controls.AddRange([title, _percentLabel, _slider, _instantCheck, _applyButton, _diagButton]);
+        Controls.AddRange([title, _percentLabel, _slider, offButton, _instantCheck, _applyButton, _diagButton]);
 
         KeyPreview  = true;
         KeyDown    += FanControlForm_KeyDown;
