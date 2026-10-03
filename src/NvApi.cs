@@ -161,7 +161,7 @@ internal static class NvApi
     private static T GetDelegate<T>(uint id) where T : Delegate
     {
         IntPtr ptr = nvapi_QueryInterface(id);
-        if (ptr == IntPtr.Zero || ptr == new IntPtr(0xDEADBEEF))
+        if (ptr == IntPtr.Zero || ptr == new IntPtr(unchecked((int)0xDEADBEEF)))
             throw new Exception($"NvAPI function 0x{id:X8} not available.");
         return Marshal.GetDelegateForFunctionPointer<T>(ptr);
     }
