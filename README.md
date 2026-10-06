@@ -77,3 +77,6 @@ the background resource usage low. Code was still checked by me and pushed by me
 - Dark/light theme popup
 - Windows service
 - 0 db mode
+
+
+![gpu_image.png](assets/images/gpu_image.png)
